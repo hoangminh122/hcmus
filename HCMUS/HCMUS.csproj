@@ -13,7 +13,6 @@
     <Folder Include="src\Shared\Constant\" />
     <Folder Include="src\Shared\Enum\" />
     <Folder Include="src\Shared\Errors\" />
-    <Folder Include="src\Shared\Filters\" />
     <Folder Include="src\Shared\Paginate\" />
     <Folder Include="Uploads\" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using HCMUS.src.Entities.Base;
 using HCMUS.src.Entities.Setting;
+using HCMUS.src.Shared.Filters;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -23,6 +24,14 @@ namespace HCMUS.src.Modules.Database
             {
                 _database = client.GetDatabase(mongoConfiguration.Value.Database);
             }
+        }
+
+        public async Task<List<TEntity>> GetAllListAsync(FilterDefinition<TEntity> filterResult, PaginationFilter page)
+        {
+           return await Collection.Find(filterResult)
+                        .Skip((page.PageNumber - 1) * page.PageSize)
+                            .Limit(page.PageSize)
+                                .ToListAsync();
         }
 
         public IMongoCollection<TEntity> Collection
@@ -162,6 +171,7 @@ namespace HCMUS.src.Modules.Database
         {
             throw new NotImplementedException();
         }
+
 
         public Task<TEntity> GetAsync(ObjectId id)
         {
@@ -307,6 +317,13 @@ namespace HCMUS.src.Modules.Database
         Task IMongoRepository<TEntity, TprimaryKey>.DeleteAsync(TprimaryKey id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<TEntity> GetByIdAsync(TprimaryKey id)
+        {
+            return await Collection
+                .Find(x => x.Id.ToString() == id.ToString())
+                .FirstOrDefaultAsync();
         }
     }
 

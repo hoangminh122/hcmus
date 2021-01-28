@@ -1,5 +1,6 @@
 ﻿using HCMUS.src.Entities.Applicant;
 using HCMUS.src.Modules.Student.Dto;
+using HCMUS.src.Shared.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace HCMUS.src.Modules.Student
     {
         public interface IStudentService
         {
-            public  Task<StudentDto> GetAllStudentsAsync();
-           public List<Students> GetAllStudents();
+            Task<PagedResponse<StudentDto>> GetAllStudentsAsync(StudentQueryInput filter);      // fixing  ->can not use
+            Task<PagedResponse<StudentDto>> GetStudentsByIdAsync(StudentQueryInput filter);
+            public List<Students> GetAllStudents();
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using HCMUS.src.Entities.Applicant;
 using HCMUS.src.Modules.Student.Dto;
+using HCMUS.src.Shared.Filters;
 using HCMUS.src.Shared.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,13 +24,19 @@ namespace HCMUS.src.Modules.Student
         }
 
         [HttpGet]
-        public async Task<StudentDto> Get()
+        public async Task<PagedResponse<StudentDto>> GetById([FromQuery] StudentQueryInput filter)
         {
-            var minh = await _studentservice.GetAllStudentsAsync();
-            
-            return await _studentservice.GetAllStudentsAsync();
-
+            return await _studentservice.GetAllStudentsAsync(filter);
         }
+
+        //[HttpGet]
+        //public async Task<StudentDto> Get()
+        //{
+        //    var minh = await _studentservice.GetAllStudentsAsync();
+            
+        //    return await _studentservice.GetAllStudentsAsync();
+
+        //}
 
 
         //[HttpGet]
