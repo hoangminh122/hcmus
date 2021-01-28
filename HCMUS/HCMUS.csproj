@@ -8,7 +8,6 @@
     <Folder Include="Migrations\" />
     <Folder Include="src\Modules\Contact\" />
     <Folder Include="src\Modules\Payment\" />
-    <Folder Include="src\Modules\Student\Dto\" />
     <Folder Include="src\Modules\Upload\" />
     <Folder Include="src\Shared\Config\" />
     <Folder Include="src\Shared\Constant\" />
@@ -16,7 +15,6 @@
     <Folder Include="src\Shared\Errors\" />
     <Folder Include="src\Shared\Filters\" />
     <Folder Include="src\Shared\Paginate\" />
-    <Folder Include="src\Shared\Utils\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
 ﻿using HCMUS.src.Entities.Applicant;
+using HCMUS.src.Modules.Student.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace HCMUS.src.Modules.Student
     {
         public interface IStudentService
         {
-            public Task<IEnumerable<Students>> GetAllStudentsAsync();
+            public  Task<StudentDto> GetAllStudentsAsync();
            public List<Students> GetAllStudents();
 
         }

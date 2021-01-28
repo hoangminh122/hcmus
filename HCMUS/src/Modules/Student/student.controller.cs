@@ -1,4 +1,6 @@
 ﻿using HCMUS.src.Entities.Applicant;
+using HCMUS.src.Modules.Student.Dto;
+using HCMUS.src.Shared.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,10 +23,12 @@ namespace HCMUS.src.Modules.Student
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<StudentDto> Get()
         {
+            var minh = await _studentservice.GetAllStudentsAsync();
+            
+            return await _studentservice.GetAllStudentsAsync();
 
-            return Ok(await _studentservice.GetAllStudentsAsync());
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using HCMUS.src.Entities.Applicant;
 using HCMUS.src.Modules.Database;
+using HCMUS.src.Modules.Student.Dto;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -34,11 +35,17 @@ namespace HCMUS.src.Modules.Student
             }
         }
 
-        public async Task<IEnumerable<Students>> GetAllStudentsAsync()
+        public async Task<StudentDto> GetAllStudentsAsync()
         {
             try
             {
-                return await _repository.GetAllListAsync();
+                var result =  await _repository.GetAllListAsync();
+                return new StudentDto
+                {
+                    Id = result[0].Id.ToString(),
+                    LastName = result[0].LastName,
+                    StudentId = result[0].StudentId
+                };
             }
             catch (Exception ex)
             {
