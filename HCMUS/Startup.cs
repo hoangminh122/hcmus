@@ -1,5 +1,7 @@
 using HCMUS.src.Modules.Auth;
 using HCMUS.src.Modules.Database;
+using HCMUS.src.Modules.Student;
+using HCMUS.src.Modules.Test;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static HCMUS.src.Modules.Auth.AuthModule;
+using static HCMUS.src.Modules.Student.StudentModule;
 
 namespace HCMUS
 {
@@ -50,6 +53,8 @@ namespace HCMUS
 
             services.AddMongoDbRepository(Configuration);
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<ITestService, TestService>();
+            services.AddTransient<IStudentService, StudentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,7 +92,7 @@ namespace HCMUS
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

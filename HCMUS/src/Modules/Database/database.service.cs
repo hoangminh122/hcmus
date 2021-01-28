@@ -145,7 +145,7 @@ namespace HCMUS.src.Modules.Database
 
         public List<TEntity> GetAllList()
         {
-            throw new NotImplementedException();
+            return Collection.Find(_ => true).ToList();
         }
 
         public List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)

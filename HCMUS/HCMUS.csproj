@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="src\Modules\Contact\" />
+    <Folder Include="src\Modules\Payment\" />
+    <Folder Include="src\Modules\Student\Dto\" />
     <Folder Include="src\Modules\Upload\" />
     <Folder Include="src\Shared\Config\" />
     <Folder Include="src\Shared\Constant\" />
