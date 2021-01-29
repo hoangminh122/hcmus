@@ -51,7 +51,7 @@ namespace HCMUS.src.Modules.Auth.Guards
             var jwtToken = (JwtSecurityToken)validatedToken;
             var userId = jwtToken.Claims.First(x => x.Type == "id").Value.ToString();
             //parse infor user in content
-            context.Items["User"] = authService.GetUsersById(userId);
+            context.Items["Users"] = authService.GetUsersById(userId);
             var minh = 0;
             var sss= authService.GetUsersById(userId);
             var s= minh + 1;

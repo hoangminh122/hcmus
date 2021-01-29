@@ -1,4 +1,5 @@
 ﻿using HCMUS.src.Entities.Applicant;
+using HCMUS.src.Modules.Auth.Guards;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace HCMUS.src.Modules.Test
             return data;
         }
 
+        [Authorize]
         [HttpGet("id")]
         public  string GetAll1()
         {

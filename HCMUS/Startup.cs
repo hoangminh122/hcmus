@@ -87,7 +87,7 @@ namespace HCMUS
 
             });
             services.AddMvc();
-
+            services.AddControllers();
             services.AddMongoDbRepository(Configuration);
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<ITestService, TestService>();
@@ -120,14 +120,14 @@ namespace HCMUS
             });
 
             //use class JwtMiddleware
-            app.UseMiddleware<JwtMiddleware>();
+           
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            app.UseMiddleware<JwtMiddleware>();
+           // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

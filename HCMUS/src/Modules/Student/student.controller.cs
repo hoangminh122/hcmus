@@ -24,14 +24,13 @@ namespace HCMUS.src.Modules.Student
             _studentservice = studentservice;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<PagedResponse<StudentDto>> GetById([FromQuery] StudentQueryInput filter)
         {
             return await _studentservice.GetAllStudentsAsync(filter);
         }
 
-        [Authorize]
+        
         [HttpGet("id")]
         public async Task<StudentDto> Get(string id)
         {
