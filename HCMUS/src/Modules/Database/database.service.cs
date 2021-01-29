@@ -321,8 +321,11 @@ namespace HCMUS.src.Modules.Database
 
         public async Task<TEntity> GetByIdAsync(TprimaryKey id)
         {
+
+            var ss = id;
+            var dada = id.ToString();
             return await Collection
-                .Find(x => x.Id.ToString() == id.ToString())
+                .Find(x => x.Id.Equals(id))
                 .FirstOrDefaultAsync();
         }
     }

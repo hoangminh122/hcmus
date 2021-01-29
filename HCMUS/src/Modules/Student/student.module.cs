@@ -13,7 +13,7 @@ namespace HCMUS.src.Modules.Student
         public interface IStudentService
         {
             Task<PagedResponse<StudentDto>> GetAllStudentsAsync(StudentQueryInput filter);      // fixing  ->can not use
-            Task<PagedResponse<StudentDto>> GetStudentsByIdAsync(StudentQueryInput filter);
+            Task<StudentDto> GetStudentsByIdAsync(string id);
             public List<Students> GetAllStudents();
 
         }

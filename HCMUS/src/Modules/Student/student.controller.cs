@@ -29,14 +29,12 @@ namespace HCMUS.src.Modules.Student
             return await _studentservice.GetAllStudentsAsync(filter);
         }
 
-        //[HttpGet]
-        //public async Task<StudentDto> Get()
-        //{
-        //    var minh = await _studentservice.GetAllStudentsAsync();
-            
-        //    return await _studentservice.GetAllStudentsAsync();
+        [HttpGet("id")]
+        public async Task<StudentDto> Get(string id)
+        {
+            return await _studentservice.GetStudentsByIdAsync(id);
 
-        //}
+        }
 
 
         //[HttpGet]
