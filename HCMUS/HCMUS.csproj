@@ -5,19 +5,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\PDA\source\repos\HCMUS\HCMUS\HCMUS.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="src\Modules\Contact\" />
-    <Folder Include="src\Modules\Payment\" />
-    <Folder Include="src\Modules\Upload\" />
-    <Folder Include="src\Shared\Config\" />
-    <Folder Include="src\Shared\Constant\" />
-    <Folder Include="src\Shared\Enum\" />
-    <Folder Include="src\Shared\Errors\" />
-    <Folder Include="src\Shared\Paginate\" />
+    <Folder Include="Area\Modules\Contact\" />
+    <Folder Include="Area\Modules\Payment\" />
+    <Folder Include="Area\Modules\Upload\" />
+    <Folder Include="Area\Shared\Config\" />
+    <Folder Include="Area\Shared\Constant\" />
+    <Folder Include="Area\Shared\Enum\" />
+    <Folder Include="Area\Shared\Errors\" />
+    <Folder Include="Area\Shared\Paginate\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
 

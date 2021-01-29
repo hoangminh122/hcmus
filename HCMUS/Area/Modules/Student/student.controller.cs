@@ -30,7 +30,6 @@ namespace HCMUS.src.Modules.Student
             return await _studentservice.GetAllStudentsAsync(filter);
         }
 
-        
         [HttpGet("id")]
         public async Task<StudentDto> Get(string id)
         {

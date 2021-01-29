@@ -25,10 +25,6 @@ namespace HCMUS.src.Modules.Student
         {
             try
             {
-                //var MINH = await _repository.GetAllListAsync();
-
-                //var minh = MINH.First().LastName;
-                //var m = 0;
                 return  _repository.GetAllList();
             }
             catch (Exception ex)
@@ -53,24 +49,19 @@ namespace HCMUS.src.Modules.Student
 
                 var page = new PaginationFilter(filter.PageNumber, filter.PageSize);
 
+                var listStudents = await _repository.GetAllListAsync(filterResult.FilterResult, page);
 
-                var result = await _repository.GetAllListAsync(filterResult.FilterResult, page);
-                //var result =  new PagedResponse<List<Students>>(
-                //            await _repository.GetAllListAsync(filterResult.FilterResult, page),
-                //            filter.PageNumber,
-                //            filter.PageSize
-                //         );
-
-
-                //var result =  await _repository.GetAllListAsync();
-                var minh =  new StudentDto
+                //map data tp Dto
+                var res = listStudents.Select(x => new StudentDto
                 {
-                    Id = result[0].Id.ToString(),
-                    LastName = result[0].LastName,
-                    StudentId = result[0].StudentId
-                };
+                    Id = x.Id.ToString(),
+                    LastName = x.LastName,
+                    StudentId = x.StudentId
+                }).ToList();
+
+
                 return new PagedResponse<StudentDto>(
-                           minh,
+                           res,
                             filter.PageNumber,
                             filter.PageSize
                          );

@@ -11,7 +11,7 @@ namespace HCMUS.src.Shared.Filters
         {
         }
 
-        public Response(T data)
+        public Response(List<T> data)
         {
             Successed = true;
             Message = string.Empty;
@@ -19,7 +19,7 @@ namespace HCMUS.src.Shared.Filters
             Data = data;
         }
 
-        public T Data { get; set; }
+        public List<T> Data { get; set; }
         public bool Successed { get; set; }
         public string[] Errors { get; set; }
         public string Message { get; set; }
