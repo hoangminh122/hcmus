@@ -1,5 +1,6 @@
 ﻿using HCMUS.src.Entities.Base;
 using HCMUS.src.Entities.Setting;
+using HCMUS.src.Shared.Filters;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -23,6 +24,14 @@ namespace HCMUS.src.Modules.Database
             {
                 _database = client.GetDatabase(mongoConfiguration.Value.Database);
             }
+        }
+
+        public async Task<List<TEntity>> GetAllListAsync(FilterDefinition<TEntity> filterResult, PaginationFilter page)
+        {
+           return await Collection.Find(filterResult)
+                        .Skip((page.PageNumber - 1) * page.PageSize)
+                            .Limit(page.PageSize)
+                                .ToListAsync();
         }
 
         public IMongoCollection<TEntity> Collection
@@ -133,9 +142,9 @@ namespace HCMUS.src.Modules.Database
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public  IQueryable<TEntity> GetAll()
         {
-            return Collection.Find(_ => true).ToList().AsQueryable();
+            return  Collection.Find(_ => true).ToList().AsQueryable();
         }
 
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
@@ -145,7 +154,7 @@ namespace HCMUS.src.Modules.Database
 
         public List<TEntity> GetAllList()
         {
-            throw new NotImplementedException();
+            return Collection.Find(_ => true).ToList();
         }
 
         public List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate)
@@ -162,6 +171,7 @@ namespace HCMUS.src.Modules.Database
         {
             throw new NotImplementedException();
         }
+
 
         public Task<TEntity> GetAsync(ObjectId id)
         {
@@ -189,9 +199,10 @@ namespace HCMUS.src.Modules.Database
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> InsertAsync(TEntity entity)
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await Collection.InsertOneAsync(entity);
+            return entity;
         }
 
         public TEntity InsertOrUpdate(TEntity entity)
@@ -307,6 +318,25 @@ namespace HCMUS.src.Modules.Database
         Task IMongoRepository<TEntity, TprimaryKey>.DeleteAsync(TprimaryKey id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<TEntity> GetByIdAsync(TprimaryKey id)
+        {
+            return await Collection
+                .Find(x => x.Id.Equals(id))
+                .FirstOrDefaultAsync();
+        }
+
+        public Task<TEntity> GetByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TEntity GetById(TprimaryKey id)
+        {
+            return  Collection
+                .Find(x => x.Id.Equals(id))
+                .FirstOrDefault();
         }
     }
 

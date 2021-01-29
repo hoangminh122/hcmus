@@ -4,16 +4,20 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile></DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="src\Modules\Upload\" />
-    <Folder Include="src\Shared\Config\" />
-    <Folder Include="src\Shared\Constant\" />
-    <Folder Include="src\Shared\Enum\" />
-    <Folder Include="src\Shared\Errors\" />
-    <Folder Include="src\Shared\Filters\" />
-    <Folder Include="src\Shared\Paginate\" />
-    <Folder Include="src\Shared\Utils\" />
+    <Folder Include="Area\Modules\Contact\" />
+    <Folder Include="Area\Modules\Payment\" />
+    <Folder Include="Area\Modules\Upload\" />
+    <Folder Include="Area\Shared\Config\" />
+    <Folder Include="Area\Shared\Constant\" />
+    <Folder Include="Area\Shared\Enum\" />
+    <Folder Include="Area\Shared\Errors\" />
+    <Folder Include="Area\Shared\Paginate\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
 

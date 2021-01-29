@@ -13,10 +13,6 @@ namespace HCMUS.src.Modules.Auth.dto
 
             public string Name { get; set; }
 
-            public DateTime DateUpdated { get; set; }
-
-            public DateTime DateCreated { get; set; }
-
             public string Avatar { get; set; }
 
             public string Email { get; set; }

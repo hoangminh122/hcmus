@@ -1,4 +1,7 @@
-﻿using HCMUS.src.Entities.Base;
+﻿using HCMUS.src.Entities.Applicant;
+using HCMUS.src.Entities.Base;
+using HCMUS.src.Shared.Filters;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -31,6 +34,10 @@ namespace HCMUS.src.Modules.Database
         List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate);
         List<TEntity> GetAllList();
         Task<List<TEntity>> GetAllListAsync();
+        Task<List<TEntity>> GetAllListAsync(FilterDefinition<TEntity> filter,PaginationFilter page);
+        Task<TEntity> GetByIdAsync(TPrimaryKey id);
+        TEntity GetById(TPrimaryKey id);
+        Task<TEntity> GetByEmailAsync(string email);
         Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> GetAsync(TPrimaryKey id);
         TEntity Insert(TEntity entity);

@@ -1,6 +1,8 @@
 ﻿using HCMUS.src.Entities.Auth;
 using HCMUS.src.Modules.Auth.dto;
+using HCMUS.src.Modules.Auth.Guards;
 using HCMUS.src.Modules.Database;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson;
 using System;
@@ -18,12 +20,13 @@ namespace HCMUS.src.Modules.Auth
    
         public class AuthService : IAuthService
         {
-
+            private readonly AppSettings _appSettings;
             private readonly IMongoRepository<Users, ObjectId> _repository;
 
-            public AuthService(IMongoRepository<Users, ObjectId> repository)
+            public AuthService(IMongoRepository<Users, ObjectId> repository,IOptions<AppSettings> appSettings)
             {
                 _repository = repository;
+                _appSettings = appSettings.Value;
             }
 
             public async Task<string> Authencate(LoginRequest request)
@@ -35,7 +38,7 @@ namespace HCMUS.src.Modules.Auth
                 //return null if user not found
 
                 if (user == null) return null;
-                byte[] secretSalt = Encoding.ASCII.GetBytes("minh123456");
+                byte[] secretSalt = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var isTruePass = VerifyPasswordHash(request.Password, user.Password, secretSalt);
                 if (isTruePass)
                 {
@@ -52,37 +55,40 @@ namespace HCMUS.src.Modules.Auth
                 //generate token that us valid 7 day
                 var tokenHandler = new JwtSecurityTokenHandler();
 
-                var key = Encoding.ASCII.GetBytes("minh123456");
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var tokenDescription = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                    Subject = new ClaimsIdentity(new[] { new Claim("id",user.Id.ToString()) }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescription);
+            var minh = 0;
+
                 return tokenHandler.WriteToken(token);
 
             }
 
-            public async Task<bool> Register(RegisterRequest request)
+            public async Task<RegisterRequest> Register(RegisterRequest request)
             {
                 try
                 {
-
-                    //byte[] passwordHash = null;
-                    //byte[] secretSalt = Encoding.ASCII.GetBytes("minh123456");
-                    //CreatePasswordHash(request.Password, out passwordHash, secretSalt);
-
-                    //User userNew = new User()
-                    //{
-                    //    Email = request.Email,
-                    //    FirstName = request.FirstName,
-                    //    LastName = request.LastName,
-                    //    IsConnected = true,
-                    //    Password = Encoding.ASCII.GetString(passwordHash)
-                    //};
-                    //await AddUser(userNew);
-                    return true;
+                byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                byte[] passwordHash = null;
+                CreatePasswordHash(request.Password, out passwordHash, key);
+                    var user = new Users
+                    {
+                        Address = request.Address,
+                        Avatar = request.Avatar,
+                        Code = request.Code,
+                        DateUpdated =DateTime.Now,
+                        DateOfBirth = request.DateOfBirth,
+                        Email = request.Email,
+                        Password = Encoding.ASCII.GetString(passwordHash),
+                        Phone = request.Phone
+                    };
+                    await _repository.InsertAsync(user);
+                    return request;
                 }
                 catch (Exception ex)
                 {
@@ -141,5 +147,44 @@ namespace HCMUS.src.Modules.Auth
             }
         }
 
+        public async Task<Users> GetUsersByIdAsync(string id)
+        {
+            try
+            {
+                var idObject = new ObjectId(id);
+                return await _repository.GetByIdAsync(idObject);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
+        public Users GetUsersById(string id)
+        {
+            try
+            {
+                var idObject = new ObjectId(id);
+                return  _repository.GetById(idObject);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<Users> GetUsersByEmailAsync(string email)
+        {
+            try
+            {
+                //var idObject = new ObjectId(id);
+                return   _repository.GetAll().FirstOrDefault(x => x.Email == email);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+    }
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using HCMUS.src.Entities.Base;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace HCMUS.src.Entities.Applicant
 {
-    public class Student
+    public class Students : IEntity<ObjectId>
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string InternalId { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("student_id")]
         public string StudentId;

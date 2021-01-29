@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HCMUS.src.Modules.Auth.Guards
+namespace HCMUS.src.Modules.Student.Dto
 {
-    public class JwtAuth
+    public class StudentResponseDto
     {
+
     }
 }

@@ -9,6 +9,6 @@ namespace HCMUS.src.Entities.Base
     public interface IEntity<TPrimaryKey>
     {
         [BsonId]
-        TPrimaryKey Id { get; set; }
+        public TPrimaryKey Id { get; set; }
     }
 }

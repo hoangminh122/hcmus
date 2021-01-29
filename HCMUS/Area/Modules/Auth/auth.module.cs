@@ -13,9 +13,11 @@ namespace HCMUS.src.Modules.Auth
         public interface IAuthService
         {
             Task<string> Authencate(LoginRequest request);
-            Task<bool> Register(RegisterRequest request);
+            Task<RegisterRequest> Register(RegisterRequest request);
             Task<IEnumerable<Users>> GetAllUsers();
-
+            Task<Users> GetUsersByIdAsync(string id);
+            Users GetUsersById(string id);
+            Task<Users> GetUsersByEmailAsync(string email);
         }
     }
 }
