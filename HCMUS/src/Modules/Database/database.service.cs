@@ -331,6 +331,13 @@ namespace HCMUS.src.Modules.Database
         {
             throw new NotImplementedException();
         }
+
+        public TEntity GetById(TprimaryKey id)
+        {
+            return  Collection
+                .Find(x => x.Id.Equals(id))
+                .FirstOrDefault();
+        }
     }
 
 }

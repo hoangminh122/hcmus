@@ -2,6 +2,7 @@
 using HCMUS.src.Modules.Student.Dto;
 using HCMUS.src.Shared.Filters;
 using HCMUS.src.Shared.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,14 @@ namespace HCMUS.src.Modules.Student
             _studentservice = studentservice;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<PagedResponse<StudentDto>> GetById([FromQuery] StudentQueryInput filter)
         {
             return await _studentservice.GetAllStudentsAsync(filter);
         }
 
+        [Authorize]
         [HttpGet("id")]
         public async Task<StudentDto> Get(string id)
         {

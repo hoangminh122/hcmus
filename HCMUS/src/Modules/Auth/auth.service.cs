@@ -160,6 +160,19 @@ namespace HCMUS.src.Modules.Auth
             }
         }
 
+        public Users GetUsersById(string id)
+        {
+            try
+            {
+                var idObject = new ObjectId(id);
+                return  _repository.GetById(idObject);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<Users> GetUsersByEmailAsync(string email)
         {
             try

@@ -16,6 +16,7 @@ namespace HCMUS.src.Modules.Auth
             Task<RegisterRequest> Register(RegisterRequest request);
             Task<IEnumerable<Users>> GetAllUsers();
             Task<Users> GetUsersByIdAsync(string id);
+            Users GetUsersById(string id);
             Task<Users> GetUsersByEmailAsync(string email);
         }
     }
