@@ -81,22 +81,22 @@ namespace HCMUS.src.Modules.Student
             }
         }
 
-        public async Task<PagedResponse<StudentDto>> GetStudentsByIdAsync(string id)
+        public async Task<StudentDto> GetStudentsByIdAsync(string id)
         {
             try
             {
                 var idObject = new ObjectId(id);
 
-                var result = await _repository.GetByIdAsync(idObject);
+                var student = await _repository.GetByIdAsync(idObject);
 
                 //var result =  await _repository.GetAllListAsync();
-                var minh = new StudentDto
+                var result = new StudentDto
                 {
-                    Id = result.Id.ToString(),
-                    LastName = result.LastName,
-                    StudentId = result.StudentId
+                    Id = student.Id.ToString(),
+                    LastName = student.LastName,
+                    StudentId = student.StudentId
                 };
-                return 
+                return result;
             }
             catch (Exception ex)
             {
