@@ -52,37 +52,40 @@ namespace HCMUS.src.Modules.Auth
                 //generate token that us valid 7 day
                 var tokenHandler = new JwtSecurityTokenHandler();
 
-                var key = Encoding.ASCII.GetBytes("minh123456");
+                var key = Encoding.ASCII.GetBytes("this is my custom Secret key for authnetication");
                 var tokenDescription = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                    Subject = new ClaimsIdentity(new[] { new Claim("id","ssss") }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescription);
+            var minh = 0;
+
                 return tokenHandler.WriteToken(token);
 
             }
 
-            public async Task<bool> Register(RegisterRequest request)
+            public async Task<RegisterRequest> Register(RegisterRequest request)
             {
                 try
                 {
-
-                    //byte[] passwordHash = null;
-                    //byte[] secretSalt = Encoding.ASCII.GetBytes("minh123456");
-                    //CreatePasswordHash(request.Password, out passwordHash, secretSalt);
-
-                    //User userNew = new User()
-                    //{
-                    //    Email = request.Email,
-                    //    FirstName = request.FirstName,
-                    //    LastName = request.LastName,
-                    //    IsConnected = true,
-                    //    Password = Encoding.ASCII.GetString(passwordHash)
-                    //};
-                    //await AddUser(userNew);
-                    return true;
+                byte[] key = Encoding.ASCII.GetBytes("minh123456");
+                byte[] passwordHash = null;
+                CreatePasswordHash(request.Password, out passwordHash, key);
+                    var user = new Users
+                    {
+                        Address = request.Address,
+                        Avatar = request.Avatar,
+                        Code = request.Code,
+                        DateUpdated =DateTime.Now,
+                        DateOfBirth = request.DateOfBirth,
+                        Email = request.Email,
+                        Password = Encoding.ASCII.GetString(passwordHash),
+                        Phone = request.Phone
+                    };
+                    await _repository.InsertAsync(user);
+                    return request;
                 }
                 catch (Exception ex)
                 {
@@ -141,5 +144,31 @@ namespace HCMUS.src.Modules.Auth
             }
         }
 
+        public async Task<Users> GetUsersByIdAsync(string id)
+        {
+            try
+            {
+                var idObject = new ObjectId(id);
+                return await _repository.GetByIdAsync(idObject);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
+        public async Task<Users> GetUsersByEmailAsync(string email)
+        {
+            try
+            {
+                //var idObject = new ObjectId(id);
+                return   _repository.GetAll().FirstOrDefault(x => x.Email == email);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+    }
 }

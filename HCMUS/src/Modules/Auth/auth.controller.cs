@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static HCMUS.src.Modules.Auth.AuthModule;
+using static HCMUS.src.Modules.Auth.dto.register_request;
 
 namespace HCMUS.src.Modules.Auth
 {
@@ -38,6 +39,25 @@ namespace HCMUS.src.Modules.Auth
             return Ok(new { token = response });
         }
 
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(RegisterRequest registerRequest)
+        {
+            if (string.IsNullOrWhiteSpace(registerRequest.Password))
+                return BadRequest(new { message = "Password is required" });
+            //find user
+            var user = await _authservice.GetUsersByEmailAsync(registerRequest.Email);
+            if (user != null)
+            {
+                return BadRequest(new { message = "Email is already taken" });
+            }
+
+            var isSaved = await _authservice.Register(registerRequest);
+            if (isSaved != null)
+                return Ok(new { sucess = 1 });
+            return BadRequest();
+
+
+        }
 
 
     }

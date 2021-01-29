@@ -36,6 +36,7 @@ namespace HCMUS.src.Modules.Database
         Task<List<TEntity>> GetAllListAsync();
         Task<List<TEntity>> GetAllListAsync(FilterDefinition<TEntity> filter,PaginationFilter page);
         Task<TEntity> GetByIdAsync(TPrimaryKey id);
+        Task<TEntity> GetByEmailAsync(string email);
         Task<List<TEntity>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> GetAsync(TPrimaryKey id);
         TEntity Insert(TEntity entity);

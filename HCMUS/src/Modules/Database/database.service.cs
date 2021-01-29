@@ -142,9 +142,9 @@ namespace HCMUS.src.Modules.Database
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public  IQueryable<TEntity> GetAll()
         {
-            return Collection.Find(_ => true).ToList().AsQueryable();
+            return  Collection.Find(_ => true).ToList().AsQueryable();
         }
 
         public IQueryable<TEntity> GetAllIncluding(params Expression<Func<TEntity, object>>[] propertySelectors)
@@ -199,9 +199,10 @@ namespace HCMUS.src.Modules.Database
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> InsertAsync(TEntity entity)
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await Collection.InsertOneAsync(entity);
+            return entity;
         }
 
         public TEntity InsertOrUpdate(TEntity entity)
@@ -321,12 +322,14 @@ namespace HCMUS.src.Modules.Database
 
         public async Task<TEntity> GetByIdAsync(TprimaryKey id)
         {
-
-            var ss = id;
-            var dada = id.ToString();
             return await Collection
                 .Find(x => x.Id.Equals(id))
                 .FirstOrDefaultAsync();
+        }
+
+        public Task<TEntity> GetByEmailAsync(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 
